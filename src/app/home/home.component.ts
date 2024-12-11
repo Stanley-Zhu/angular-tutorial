@@ -18,13 +18,13 @@ import {FormsModule} from "@angular/forms";
       </form>
     </section>
     <section class="results">
-      <app-housing-location 
-        *ngFor="let housingLocation of filteredLocationList"
-        [housingLocation]="housingLocation"
+      <app-housing-location
+          *ngFor="let housingLocation of filteredLocationList"
+          [housingLocation]="housingLocation"
       ></app-housing-location>
     </section>
   `,
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
   readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
@@ -33,7 +33,10 @@ export class HomeComponent {
   filteredLocationList: HousingLocation[] = [];
 
   constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocations()
+    this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
+      this.housingLocationList = housingLocationList;
+      this.filteredLocationList = housingLocationList;
+    });
     // filtered list should be all housingLocations by default
     this.filteredLocationList = this.housingLocationList;
   }
